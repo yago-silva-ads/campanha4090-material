@@ -1,4 +1,3 @@
-```xml
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -260,6 +259,12 @@ h1 {
       <div class="error-msg">Informe o bairro</div>
     </div>
 
+    <div class="field" id="f-rua">
+      <label for="rua">Rua / Logradouro *</label>
+      <input type="text" id="rua" placeholder="Rua/logradouro" maxlength="200" required>
+      <div class="error-msg">Informe a rua</div>
+    </div>
+
     <div class="field" id="f-numero">
       <label for="numero">Número da casa *</label>
       <input type="text" id="numero" placeholder="Ex: 123 ou S/N" maxlength="10" required>
@@ -334,6 +339,7 @@ function validate() {
     ["f-estado",   () => Q("#estado").value.length === 2],
     ["f-cidade",   () => sanitize(Q("#cidade").value).length >= 2],
     ["f-bairro",   () => sanitize(Q("#bairro").value).length >= 2],
+    ["f-rua",      () => sanitize(Q("#rua").value).length >= 2],
     ["f-numero",   () => sanitize(Q("#numero").value).length >= 1],
   ];
   checks.forEach(([id, fn]) => {
@@ -386,6 +392,7 @@ Q("#cep").addEventListener("input", function() {
         if (!d.erro) {
           Q("#cidade").value = sanitize(d.localidade || "");
           Q("#bairro").value = sanitize(d.bairro || "");
+          Q("#rua").value = sanitize(d.logradouro || "");
           Q("#estado").value = d.uf || "SP";
         }
       }).catch(() => {});
@@ -422,6 +429,7 @@ Q("#mForm").addEventListener("submit", function(e) {
     estado: sanitize(Q("#estado").value),
     cidade: sanitize(Q("#cidade").value),
     bairro: sanitize(Q("#bairro").value),
+    rua: sanitize(Q("#rua").value),
     numero: sanitize(Q("#numero").value),
     origem: "ManyChat IG",
     // SECURITY: fingerprint to detect duplicates
@@ -450,4 +458,3 @@ function Q(s) { return document.querySelector(s); }
 </script>
 </body>
 </html>
-```
